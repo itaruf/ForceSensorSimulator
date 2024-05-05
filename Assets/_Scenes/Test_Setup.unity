@@ -442,6 +442,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 255343748}
     m_Modifications:
     - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: eDI_ArrowMagnitude
+      value: 
+      objectReference: {fileID: 11400000, guid: b428a2c5a24418243a3a6561dd9a7183, type: 2}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: eDI_ArrowVisibility
       value: 
       objectReference: {fileID: 11400000, guid: 658daecfe84df9045a6777ab4daea0db, type: 2}
@@ -454,6 +458,38 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorLowMagnitude.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorLowMagnitude.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorLowMagnitude.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorLowMagnitude.r
+      value: 0.052918315
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorHighMagnitude.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorHighMagnitude.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorHighMagnitude.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowColorHighMagnitude.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: eDI_ArrowLowMagnitudeColor
       value: 
       objectReference: {fileID: 11400000, guid: ff01c43b439defe4b9b20256dc4ce900, type: 2}
@@ -461,6 +497,10 @@ PrefabInstance:
       propertyPath: eDI_ArrowHighMagnitudeColor
       value: 
       objectReference: {fileID: 11400000, guid: e385fac8d1f2e174b82189233afb1d44, type: 2}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: eDI_ArrowMagnitudeThreshold
+      value: 
+      objectReference: {fileID: 11400000, guid: 3120e989101eec74a95cb9012bf6e369, type: 2}
     - target: {fileID: 6520364991233409760, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: m_Name
       value: Arrow Force Visualizer Manager
@@ -733,42 +773,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1811886250}
     m_Modifications:
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2561338060036248568, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3906546881679159283, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -857,14 +861,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrow Settings Panel
       objectReference: {fileID: 0}
-    - target: {fileID: 4680847757035416312, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: eDI_Color
-      value: 
-      objectReference: {fileID: 11400000, guid: ff01c43b439defe4b9b20256dc4ce900, type: 2}
-    - target: {fileID: 4680847757844214789, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
-      propertyPath: eDI_Color
-      value: 
-      objectReference: {fileID: 11400000, guid: e385fac8d1f2e174b82189233afb1d44, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07ac711cfd4537346bce2781a7cb5e8b, type: 3}
 --- !u!1001 &7932050471349632587
