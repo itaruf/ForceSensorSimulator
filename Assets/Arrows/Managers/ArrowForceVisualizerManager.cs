@@ -13,9 +13,10 @@ public class ArrowForceVisualizerManager : MonoBehaviour
     private bool _arrowVisibility = true;
 
     // Arrow Event Dispatchers to bind to
-    public ArrowColorEventDispatcher eDI_ArrowLowMagnitudeColor;
-    public ArrowColorEventDispatcher eDI_ArrowHighMagnitudeColor;
-    public ArrowVisibilityEventDispatcher eDI_ArrowVisibility;
+    public ColorEventDispatcher eDI_ArrowLowMagnitudeColor;
+    public ColorEventDispatcher eDI_ArrowHighMagnitudeColor;
+    public BoolEventDispatcher eDI_ArrowVisibility;
+    public FloatEventDispatcher eDI_ArrowMagnitude;
 
     // Arrow Events to trigger in response to the event dispatchers
     public static event ColorEvents.OnColorChange onArrowColorChangeByMagnitude;
@@ -46,6 +47,9 @@ public class ArrowForceVisualizerManager : MonoBehaviour
 
         if (eDI_ArrowVisibility != null)
             eDI_ArrowVisibility.AddListener(UpdateVisibility);
+
+        if (eDI_ArrowMagnitude != null)
+            eDI_ArrowMagnitude.AddListener(Test);
     }
 
     void UpdateVisibility(bool bVisibility)
@@ -64,5 +68,10 @@ public class ArrowForceVisualizerManager : MonoBehaviour
     {
         _colorHighMagnitude = color;
         onArrowColorChangeByMagnitude?.Invoke(_colorHighMagnitude);
+    }
+
+    private void Test(float value)
+    {
+        Debug.Log(value);
     }
 }

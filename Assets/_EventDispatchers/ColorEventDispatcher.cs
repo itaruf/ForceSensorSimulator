@@ -1,24 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-// Event Dispatcher for Color changes
-public abstract class ColorEventDispatcher : ScriptableObject
+// Scriptable object that serves as an event dispatcher to handle and dispatch Color messages
+[CreateAssetMenu(fileName = "Color Event Dispatcher", menuName = "Generic Event Dispatcher/Color Event Dispatcher", order = 0)]
+public class ColorEventDispatcher : CustomEventDispatcher<Color>
 {
-    protected List<ColorEvents.OnColorChange> listeners = new List<ColorEvents.OnColorChange>();
-
-    public virtual void TriggerEvent(Color color)
-    {
-        for (int i = listeners.Count - 1; i >= 0; i--)
-            listeners[i]?.Invoke(color);
-    }
-
-    public virtual void AddListener(ColorEvents.OnColorChange listener)
-    {
-        listeners.Add(listener);
-    }
-
-    public virtual void RemoveListener(ColorEvents.OnColorChange listener)
-    {
-        listeners.Remove(listener);
-    }
 }
