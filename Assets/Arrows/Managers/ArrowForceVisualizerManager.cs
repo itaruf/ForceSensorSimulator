@@ -6,26 +6,31 @@ public class ArrowForceVisualizerManager : MonoBehaviour
     public static ArrowForceVisualizerManager instance;
 
     // Colors for low and high magnitude values
-    [SerializeField] private Color _colorLowMagnitude;
-    [SerializeField] private Color _colorHighMagnitude;
+    [SerializeField] private Color _arrowColorLowMagnitude;
+    [SerializeField] private Color _arrowColorHighMagnitude;
 
     // Keep track of the visibility of all generated arrows
     private bool _arrowVisibility = true;
+
+    // Magnitude threshold
+    [SerializeField] private float _arrowMagnitudeThreshold = 5f;
 
     // Arrow Event Dispatchers to bind to
     public ColorEventDispatcher eDI_ArrowLowMagnitudeColor;
     public ColorEventDispatcher eDI_ArrowHighMagnitudeColor;
     public BoolEventDispatcher eDI_ArrowVisibility;
-    public FloatEventDispatcher eDI_ArrowMagnitude;
+    public StringEventDispatcher eDI_ArrowMagnitudeThreshold;
 
     // Arrow Events to trigger in response to the event dispatchers
     public static event ColorEvents.OnColorChange onArrowColorChangeByMagnitude;
     public static event VisibilityEvents.OnVisibilityChange onArrowVisibilityChange;
+    public static event ForceEvents.OnForceMagnitudeChange onForceMagnitudeChangeByMagnitude;
 
     // Property accessors
-    public Color ColorLowMagnitude { get => _colorLowMagnitude; }
-    public Color ColorHighMagnitude { get => _colorHighMagnitude; }
+    public Color ArrowColorLowMagnitude { get => _arrowColorLowMagnitude; }
+    public Color ArrowColorHighMagnitude { get => _arrowColorHighMagnitude; }
     public bool ArrowVisibility { get => _arrowVisibility; }
+    public float ArrowMagnitudeThreshold { get => _arrowMagnitudeThreshold; }
 
     private void Awake()
     {
@@ -48,11 +53,11 @@ public class ArrowForceVisualizerManager : MonoBehaviour
         if (eDI_ArrowVisibility != null)
             eDI_ArrowVisibility.AddListener(UpdateVisibility);
 
-        if (eDI_ArrowMagnitude != null)
-            eDI_ArrowMagnitude.AddListener(Test);
+        if (eDI_ArrowMagnitudeThreshold != null)
+            eDI_ArrowMagnitudeThreshold.AddListener(UpdateMagnitudeThreshold);
     }
 
-    void UpdateVisibility(bool bVisibility)
+    private void UpdateVisibility(bool bVisibility)
     {
         _arrowVisibility = bVisibility;
         onArrowVisibilityChange?.Invoke(bVisibility);
@@ -60,18 +65,22 @@ public class ArrowForceVisualizerManager : MonoBehaviour
 
     private void UpdateLowMagnitudeColor(Color color)
     {
-        _colorLowMagnitude = color;
-        onArrowColorChangeByMagnitude?.Invoke(_colorLowMagnitude);
+        _arrowColorLowMagnitude = color;
+        onArrowColorChangeByMagnitude?.Invoke(_arrowColorLowMagnitude);
     }
 
     private void UpdateHighMagnitudeColor(Color color)
     {
-        _colorHighMagnitude = color;
-        onArrowColorChangeByMagnitude?.Invoke(_colorHighMagnitude);
+        _arrowColorHighMagnitude = color;
+        onArrowColorChangeByMagnitude?.Invoke(_arrowColorHighMagnitude);
     }
 
-    private void Test(float value)
+    private void UpdateMagnitudeThreshold(string value)
     {
-        Debug.Log(value);
+        if (float.TryParse(value, out float parsedValue))
+        {
+            _arrowMagnitudeThreshold = parsedValue;
+            onForceMagnitudeChangeByMagnitude?.Invoke(_arrowMagnitudeThreshold);
+        } 
     }
 }

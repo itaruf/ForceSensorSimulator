@@ -66,11 +66,11 @@ public class ArrowForceVisualizer : MonoBehaviour
             Vector3 normalizedForce = force.normalized;
 
             // The magnitude is capped
-            float magnitudeThreshold = 5f;
+            float magnitudeThreshold = ArrowForceVisualizerManager.instance.ArrowMagnitudeThreshold;
             float scaledMagnitude = magnitude / magnitudeThreshold;
 
             // Smoothly transitioning the color based on the magnitude
-            Color targetColor = Color.Lerp(ArrowForceVisualizerManager.instance.ColorLowMagnitude, ArrowForceVisualizerManager.instance.ColorHighMagnitude, scaledMagnitude);
+            Color targetColor = Color.Lerp(ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude, ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude, scaledMagnitude);
 
             lerpTime += Time.deltaTime / transitionDuration; 
              
