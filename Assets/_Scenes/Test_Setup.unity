@@ -168,9 +168,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2018465099}
     m_Modifications:
+    - target: {fileID: 4586615164792312873, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187664, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_Name
-      value: Force Sensor + Arrow
+      value: Force Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 9086259754245187664, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_RootOrder
@@ -178,15 +186,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.11
+      value: 0.44
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.08
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -230,9 +238,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2018465099}
     m_Modifications:
+    - target: {fileID: 4586615164792312873, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187664, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_Name
-      value: Force Sensor + Arrow
+      value: Force Sensor
+      objectReference: {fileID: 0}
+    - target: {fileID: 9086259754245187664, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_RootOrder
@@ -240,15 +256,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.99
+      value: 1.171
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.08
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -458,8 +474,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
+      propertyPath: _arrowMagnitudeThreshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: _arrowColorLowMagnitude.a
-      value: 1
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: _arrowColorLowMagnitude.b
@@ -475,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: _arrowColorHighMagnitude.a
-      value: 1
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 4890361324559866991, guid: 5d782855812e80a48a9c55ef1a7269cb, type: 3}
       propertyPath: _arrowColorHighMagnitude.b
@@ -597,6 +617,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8348842206285664, guid: d00f0fc60fcf1fb47b5f469ef8a2f7ad, type: 3}
+      propertyPath: field of view
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 8348842206285666, guid: d00f0fc60fcf1fb47b5f469ef8a2f7ad, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -607,15 +631,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8348842206285671, guid: d00f0fc60fcf1fb47b5f469ef8a2f7ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.41
       objectReference: {fileID: 0}
     - target: {fileID: 8348842206285671, guid: d00f0fc60fcf1fb47b5f469ef8a2f7ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.877
       objectReference: {fileID: 0}
     - target: {fileID: 8348842206285671, guid: d00f0fc60fcf1fb47b5f469ef8a2f7ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -2.941
       objectReference: {fileID: 0}
     - target: {fileID: 8348842206285671, guid: d00f0fc60fcf1fb47b5f469ef8a2f7ad, type: 3}
       propertyPath: m_LocalRotation.w
@@ -929,7 +953,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9086259754245187664, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_Name
-      value: Force Sensor + Arrow
+      value: Force Sensor
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_RootOrder
@@ -937,15 +961,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.224
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.08
       objectReference: {fileID: 0}
     - target: {fileID: 9086259754245187665, guid: 0268896969ba0904a96ca6d19307b9d6, type: 3}
       propertyPath: m_LocalRotation.w
