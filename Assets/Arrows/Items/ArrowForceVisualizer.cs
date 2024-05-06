@@ -13,14 +13,22 @@ public class ArrowForceVisualizer : MonoBehaviour
     // Update the arrow with the simulated force data provided
     private Coroutine _updateArrowWithForceDataCoroutine;
 
+    // Draw the arrow in-game with the LineRenderer component
+    [SerializeField] private LineRenderer _arrowLineRenderer;
+
     private void Start()
     {
         if (!_forceSensor)
             _forceSensor = GetComponentInParent<ForceSensor>();
 
+        if (TryGetComponent(out _arrowLineRenderer))
+        {
+            _arrowLineRenderer.startWidth = 0.01f;
+            _arrowLineRenderer.endWidth = 0.01f;
+        }
+
         if (ArrowForceVisualizerManager.instance != null)
         {
-            ArrowForceVisualizerManager.onArrowColorChangeByMagnitude += (color) => { _color = color; };
             ArrowForceVisualizerManager.onArrowVisibilityChange += (bVisibility) =>
             {
                 if (bVisibility)
@@ -28,6 +36,7 @@ public class ArrowForceVisualizer : MonoBehaviour
                     if (_updateArrowWithForceDataCoroutine == null)
                     {
                         _updateArrowWithForceDataCoroutine = StartCoroutine(UpdateArrowWithForceData());
+                        _arrowLineRenderer.enabled = true;
                     }
                 }
                 else
@@ -36,11 +45,12 @@ public class ArrowForceVisualizer : MonoBehaviour
                     {
                         StopCoroutine(_updateArrowWithForceDataCoroutine);
                         _updateArrowWithForceDataCoroutine = null;
+                        _arrowLineRenderer.enabled = false;
                     }
                 }
             };
 
-            if (ArrowForceVisualizerManager.instance.ArrowVisibility)
+            if (ArrowForceVisualizerManager.instance.ArrowVisibility && _arrowLineRenderer != null)
                 _updateArrowWithForceDataCoroutine = StartCoroutine(UpdateArrowWithForceData());
         }
     }
@@ -69,17 +79,22 @@ public class ArrowForceVisualizer : MonoBehaviour
             float magnitudeThreshold = ArrowForceVisualizerManager.instance.ArrowMagnitudeThreshold;
             float scaledMagnitude = magnitude / magnitudeThreshold;
 
-            // Smoothly transitioning the color based on the magnitude
+            // Choose the color based on the magnitude between the low and high color extremum
             Color targetColor = Color.Lerp(ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude, ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude, scaledMagnitude);
 
-            lerpTime += Time.deltaTime / transitionDuration; 
-             
+            // Smoothly transition to the selected color
             _color = Color.Lerp(_color, targetColor, lerpTime * transitionSpeed);
 
-            DebugArrow.DrawForDebug(transform.position, normalizedForce, _color, scaledMagnitude);
+            // Draw the arrow
+            DrawArrow.DrawWithLineRenderer(_arrowLineRenderer, transform.position, normalizedForce, _color, scaledMagnitude, 0.1f);
+            DrawArrow.DrawForDebug(transform.position, normalizedForce, _color, scaledMagnitude, 0, 0.1f);
 
+            // Update the lerp time used to draw the arrow
+            lerpTime += Time.deltaTime / transitionDuration;
+
+            // Reset lerp time
             if (lerpTime >= 1f)
-                lerpTime = 0; // Reset lerp time
+                lerpTime = 0; 
 
             yield return null;
         }
