@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6520364991233409760}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3335745d7b2c294f86ce509859975ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colorLowMagnitude: {r: 0, g: 1, b: 0.08235288, a: 0}
-  _colorHighMagnitude: {r: 1, g: 0, b: 0, a: 0}
-  eDI_ArrowLowMagnitudeColor: {fileID: 0}
-  eDI_ArrowHighMagnitudeColor: {fileID: 0}
-  eDI_ArrowVisibility: {fileID: 0}
+  _arrowColorLowMagnitude: {r: 0.8867924, g: 0, b: 0.5724906, a: 0.5019608}
+  _arrowColorHighMagnitude: {r: 0.9896476, g: 1, b: 0.9858491, a: 0.5019608}
+  _arrowMagnitudeThreshold: 12
+  eDI_ArrowLowMagnitudeColor: {fileID: 11400000, guid: ff01c43b439defe4b9b20256dc4ce900, type: 2}
+  eDI_ArrowHighMagnitudeColor: {fileID: 11400000, guid: e385fac8d1f2e174b82189233afb1d44, type: 2}
+  eDI_ArrowVisibility: {fileID: 11400000, guid: 658daecfe84df9045a6777ab4daea0db, type: 2}
+  eDI_ArrowMagnitudeThreshold: {fileID: 11400000, guid: 3120e989101eec74a95cb9012bf6e369, type: 2}

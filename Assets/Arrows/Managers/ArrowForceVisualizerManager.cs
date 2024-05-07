@@ -3,7 +3,22 @@ using UnityEngine;
 // Class that manages the settings for the arrows representing the force sensors readings
 public class ArrowForceVisualizerManager : MonoBehaviour
 {
-    public static ArrowForceVisualizerManager instance;
+    private static ArrowForceVisualizerManager _instance;
+    public static ArrowForceVisualizerManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // Search for existing instance in the scene
+                _instance = FindObjectOfType<ArrowForceVisualizerManager>();
+
+                if (_instance == null)
+                    _instance = CreateInstance();
+            }
+            return _instance;
+        }
+    }
 
     // Colors for low and high magnitude values
     [SerializeField] private Color _arrowColorLowMagnitude;
@@ -27,19 +42,22 @@ public class ArrowForceVisualizerManager : MonoBehaviour
     public static event ForceEvents.OnForceMagnitudeChange onForceMagnitudeChangeByMagnitude;
 
     // Property accessors
-    public Color ArrowColorLowMagnitude { get => _arrowColorLowMagnitude; }
-    public Color ArrowColorHighMagnitude { get => _arrowColorHighMagnitude; }
+    public Color ArrowColorLowMagnitude { get => _arrowColorLowMagnitude; set => _arrowColorLowMagnitude = value; }
+    public Color ArrowColorHighMagnitude { get => _arrowColorHighMagnitude; set => _arrowColorHighMagnitude = value; }
     public bool ArrowVisibility { get => _arrowVisibility; }
     public float ArrowMagnitudeThreshold { get => _arrowMagnitudeThreshold; }
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        if (_instance != null && _instance != this)
+        {
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()
@@ -82,5 +100,23 @@ public class ArrowForceVisualizerManager : MonoBehaviour
             _arrowMagnitudeThreshold = parsedValue;
             onForceMagnitudeChangeByMagnitude?.Invoke(_arrowMagnitudeThreshold);
         } 
+    }
+
+    public static ArrowForceVisualizerManager CreateInstance()
+    {
+        if (PrefabManager.instance)
+        {
+            GameObject manager = Instantiate(PrefabManager.instance.arrowForceVisualizerManager);
+            manager.name = PrefabManager.instance.arrowForceVisualizerManager.name;
+
+            if (manager.TryGetComponent(out ArrowForceVisualizerManager arrowForceVisualizerManager))
+                return arrowForceVisualizerManager;
+            else
+                return null;
+        }
+        else 
+        { 
+            return null; 
+        }
     }
 }
