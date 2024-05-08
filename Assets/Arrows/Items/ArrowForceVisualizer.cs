@@ -96,7 +96,7 @@ public class ArrowForceVisualizer : MonoBehaviour
 
             // Draw the arrow
             DrawArrow.DrawWithLineRenderer(_arrowLineRenderer, transform.position, normalizedForce, _color, scaledMagnitude, 0.1f);
-            //DrawArrow.DrawForDebug(transform.position, normalizedForce, _color, scaledMagnitude, 0, 0.1f);
+            DrawArrow.DrawForDebug(transform.position, normalizedForce, _color, scaledMagnitude, 0, 0.1f);
 
             // Update the lerp time used to draw the arrow
             lerpTime += Time.deltaTime / transitionDuration;
