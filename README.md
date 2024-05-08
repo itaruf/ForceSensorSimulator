@@ -15,10 +15,10 @@ Contains the following relevant game objects:
   - 1 Arrow Settings Panel: UI where the force sensors/arrows' global settings (e.g: force threshold, color selection for low and high magnitude values, etc.) are centralized.
   - 1 Scene Settings Manager: from where we can call the YAML parser at editor time, or at run time.
 
-That scene showcases the visual representation of the simulation of force information with arrows. Arrows parameters can be updated in-game through the UI or through the parsed data extracted by the YAML parser.
+That scene showcases the visual representation of the simulation of force information with arrows. Force sensors/arrows' parameters can be updated in-game through the UI or through the parsed data extracted by the YAML parser.
 
 ### Test_Transition_Setup
-Contains the following relevant game objects:
+Contains the following relevant game object:
    - 1 Scene Settings Manager
 
-An empty scene showcasing the YAML parser, i.e. the extraction of data from a YAML file, the addition of missing game objects and the adjustments of some of their properties (e.g: position, rotation, colors, parent, etc.), at editor time or at run time.
+An empty scene showcasing the YAML parser, i.e. the extraction of data from a YAML file, the addition of missing game objects and the adjustments of some of their properties (e.g: position, rotation, colors, parent, etc.), at editor time, or at run time.
