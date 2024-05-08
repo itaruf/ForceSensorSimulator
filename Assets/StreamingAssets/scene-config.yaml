@@ -1,0 +1,39 @@
+force_sensor_game_objects_settings:
+  - id: "Force Sensor 1"
+    addressable_key: "force_sensor"
+    parent: "--Force Sensors--"
+    position: {x: 0, y: 1, z: 0}
+    rotation: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    material_key: "material_force_sensor"
+  - id: "Force Sensor 2"
+    addressable_key: "force_sensor"
+    parent: "--Force Sensors--"
+    position: {x: 5, y: 0, z: -3}
+    rotation: {x: 0, y: 90, z: 0}
+    scale: {x: 2, y: 2, z: 2}
+    material_key: "material_force_sensor"
+  - id: "Force Sensor 3"
+    addressable_key: "force_sensor"
+    parent: "--Force Sensors--"
+    position: {x: 5, y: 0, z: -3}
+    rotation: {x: 0, y: 90, z: 0}
+    scale: {x: 2, y: 2, z: 2}
+    material_key: "material_force_sensor"
+force_sensor_color_settings:
+  color_low_magnitude:
+    name: "Blue"
+    r: 0
+    g: 0
+    b: 1
+    a: 0.5019608
+    hide_flags: None
+  color_high_magnitude:
+    name: "Red"
+    r: 1
+    g: 0
+    b: 0
+    a: 0.5019608
+    hide_flags: None
+force_sensor_force_settings:
+  force_threshold: 2

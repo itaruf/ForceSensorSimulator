@@ -44,8 +44,8 @@ public class ArrowForceVisualizerManager : MonoBehaviour
     // Property accessors
     public Color ArrowColorLowMagnitude { get => _arrowColorLowMagnitude; set => _arrowColorLowMagnitude = value; }
     public Color ArrowColorHighMagnitude { get => _arrowColorHighMagnitude; set => _arrowColorHighMagnitude = value; }
-    public bool ArrowVisibility { get => _arrowVisibility; }
-    public float ArrowMagnitudeThreshold { get => _arrowMagnitudeThreshold; }
+    public bool ArrowVisibility { get => _arrowVisibility; set => _arrowVisibility = value; }
+    public float ArrowMagnitudeThreshold { get => _arrowMagnitudeThreshold; set => _arrowMagnitudeThreshold = value; }
 
     private void Awake()
     {
