@@ -11,9 +11,11 @@ There are 2 main scenes: Test_Setup and Test_Transition_Setup (in the _Scenes fo
 
 ### Test_Setup
 Contains the following relevant game objects:
-  - 2 Force Sensor + Arrow: display the arrow representing the force data information provided by the external library.
+  - 2 Force Sensor + Arrow: displays an arrow associated with a data sensor and representing the force data information provided by the external library.
   - 1 Arrow Settings Panel: UI where the force sensors/arrows' global settings (e.g: force threshold, color selection for low and high magnitude values, etc.) are centralized.
   - 1 Scene Settings Manager: from where we can call the YAML parser at editor time, or at run time.
+
+That scene showcases the visual representation of the simulation of force information with arrows. Arrows parameters can be updated in-game through the UI or through the parsed data extracted by the YAML parser.
 
 ### Test_Transition_Setup
 Contains the following relevant game objects:
