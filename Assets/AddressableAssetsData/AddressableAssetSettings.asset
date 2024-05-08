@@ -85,6 +85,8 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - force_sensor
+    - prefab_manager
+    - arrow_manager
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: a148c2a5b85f83f46a254f8e2c748587, type: 2}

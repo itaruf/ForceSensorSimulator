@@ -1,24 +1,13 @@
+using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 // Class that manages the settings for the arrows representing the force sensors readings
 public class ArrowForceVisualizerManager : MonoBehaviour
 {
     private static ArrowForceVisualizerManager _instance;
-    public static ArrowForceVisualizerManager instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                // Search for existing instance in the scene
-                _instance = FindObjectOfType<ArrowForceVisualizerManager>();
-
-                if (_instance == null)
-                    _instance = CreateInstance();
-            }
-            return _instance;
-        }
-    }
+    public static ArrowForceVisualizerManager Instance { get => _instance; set { _instance = value; } }
 
     // Colors for low and high magnitude values
     [SerializeField] private Color _arrowColorLowMagnitude;
@@ -29,6 +18,9 @@ public class ArrowForceVisualizerManager : MonoBehaviour
 
     // Magnitude threshold
     [SerializeField] private float _arrowMagnitudeThreshold = 5f;
+
+    // Every x seconds, update the data
+    [SerializeField] private float _updateDelay = 2f;
 
     // Arrow Event Dispatchers to bind to
     public ColorEventDispatcher eDI_ArrowLowMagnitudeColor;
@@ -46,6 +38,7 @@ public class ArrowForceVisualizerManager : MonoBehaviour
     public Color ArrowColorHighMagnitude { get => _arrowColorHighMagnitude; set => _arrowColorHighMagnitude = value; }
     public bool ArrowVisibility { get => _arrowVisibility; set => _arrowVisibility = value; }
     public float ArrowMagnitudeThreshold { get => _arrowMagnitudeThreshold; set => _arrowMagnitudeThreshold = value; }
+    public float UpdateDelay { get => _updateDelay; set => _updateDelay = value; }
 
     private void Awake()
     {
@@ -99,24 +92,20 @@ public class ArrowForceVisualizerManager : MonoBehaviour
         {
             _arrowMagnitudeThreshold = parsedValue;
             onForceMagnitudeChangeByMagnitude?.Invoke(_arrowMagnitudeThreshold);
-        } 
+        }
     }
 
-    public static ArrowForceVisualizerManager CreateInstance()
+    public ArrowForceVisualizerManager CreateInstance()
     {
-        if (PrefabManager.instance)
+        Addressables.LoadAssetAsync<GameObject>("arrow_manager").Completed += (asyncOperationHandle) =>
         {
-            GameObject manager = Instantiate(PrefabManager.instance.arrowForceVisualizerManager);
-            manager.name = PrefabManager.instance.arrowForceVisualizerManager.name;
+            if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                GameObject manager = Instantiate(asyncOperationHandle.Result);
+                _instance = manager.GetComponent<ArrowForceVisualizerManager>();
+            }
+        };
 
-            if (manager.TryGetComponent(out ArrowForceVisualizerManager arrowForceVisualizerManager))
-                return arrowForceVisualizerManager;
-            else
-                return null;
-        }
-        else 
-        { 
-            return null; 
-        }
+        return _instance;
     }
 }

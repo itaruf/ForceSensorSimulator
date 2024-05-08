@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - force_sensor
+  - m_GUID: 5d782855812e80a48a9c55ef1a7269cb
+    m_Address: Assets/Arrows/Managers/Arrow Force Visualizer Manager.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - arrow_manager
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cf9c6bce95d88f045af7c3b06364f11f, type: 2}
   m_SchemaSet:
