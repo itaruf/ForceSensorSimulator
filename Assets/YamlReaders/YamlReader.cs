@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class YamlReader : MonoBehaviour
+// Define classes that will match the structure of the YAML data file
+public class YamlReader
 {
-    public class ForceSensorSettings
+    // Settings specific to force sensor game objects
+    public class ForceSensorGOSettings
     {
         public string id;
         public string addressable_key;
@@ -21,63 +22,29 @@ public class YamlReader : MonoBehaviour
         public string material_key;
     }
 
-    // Save the color data
+    // Settings specific to arrows' color based on magnitude
     public class ColorSettings
     {
-        // attributes must match the attributes from the yaml file
         public ColorData color_low_magnitude { get; set; }
         public ColorData color_high_magnitude { get; set; }
     }
 
+    // Setting specific to force 
     public class ForceSettings
     {
         public float force_threshold { get; set; }
     }
 
+    // Main configuration container that includes all individual settings groups
     public class SceneConfiguration
     {
-        public List<ForceSensorSettings> force_sensor_game_objects_settings;
+        public List<ForceSensorGOSettings> force_sensor_game_objects_settings;
         public ColorSettings force_sensor_color_settings;
         public ForceSettings force_sensor_force_settings;
     }
 
-    /*private ColorSettings colors;*/
-
-    // Custom actions to trigger from the inspector
-    [CustomEditor(typeof(YamlReader))]
-    public class ArrowColorReaderEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            YamlReader arrowColorReader = (YamlReader)target;
-
-            if (GUILayout.Button("Load Arrow Data from YAML File"))
-            {
-                arrowColorReader.LoadData();
-            }
-
-            if (GUILayout.Button("Save Arrow Data to YAML File"))
-            {
-                arrowColorReader.SaveData(null/*arrowColorReader.colors*/);
-            }
-        }
-    }
-
-    private void Awake()
-    {
-        Initialize();
-        DontDestroyOnLoad(gameObject);
-    }
-
-    private void Initialize()
-    {
-        /*colors = new ColorSettings();*/
-    }
-
     [ExecuteInEditMode]
-    private void LoadData()
+    public static void LoadData()
     {
         string yamlPath = Path.Combine(Application.streamingAssetsPath, "scene-config.yaml");
 
@@ -85,8 +52,6 @@ public class YamlReader : MonoBehaviour
         {
             try
             {
-                Debug.Log($"Load file: {yamlPath}");
-
                 // Get all the content within the file
                 string yamlContent = File.ReadAllText(yamlPath);
 
@@ -94,8 +59,8 @@ public class YamlReader : MonoBehaviour
                 var deserializer = new DeserializerBuilder().Build();
                 SceneConfiguration config = deserializer.Deserialize<SceneConfiguration>(yamlContent);
 
-                // Apply the data to the game objects, etc.
-                ApplyConfiguration(config);
+                // Parse the deserialized data and apply the data to game objects, etc.
+                Parse(config);
             }
             catch (IOException e)
             {
@@ -109,34 +74,40 @@ public class YamlReader : MonoBehaviour
     }
 
     [ExecuteInEditMode]
-    private void SaveData(ColorSettings colors)
+    public static void SaveData()
     {
-        colors ??= new ColorSettings();
+        SceneConfiguration package = new SceneConfiguration();
 
-        if (ArrowForceVisualizerManager.instance)
+        if (ArrowForceVisualizerManager.Instance)
         {
-            // Retrieve the necessary arrow color data to save
+            // Save game objects
+            var forceSensors = GameObject.FindObjectsOfType<ForceSensor>();
+
+            // Save color settings
             ColorData colorLowMagnitude = ScriptableObject.CreateInstance<ColorData>();
 
-            colorLowMagnitude.name = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude.ToString();
-            colorLowMagnitude.r = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude.r;
-            colorLowMagnitude.g = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude.g;
-            colorLowMagnitude.b = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude.b;
-            colorLowMagnitude.a = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude.a;
+            colorLowMagnitude.name = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude.ToString();
+            colorLowMagnitude.r = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude.r;
+            colorLowMagnitude.g = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude.g;
+            colorLowMagnitude.b = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude.b;
+            colorLowMagnitude.a = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude.a;
 
             ColorData colorHighMagnitude = ScriptableObject.CreateInstance<ColorData>();
 
-            colorHighMagnitude.name = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude.ToString();
-            colorHighMagnitude.r = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude.r;
-            colorHighMagnitude.g = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude.g;
-            colorHighMagnitude.b = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude.b;
-            colorHighMagnitude.a = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude.a;
+            colorHighMagnitude.name = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude.ToString();
+            colorHighMagnitude.r = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude.r;
+            colorHighMagnitude.g = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude.g;
+            colorHighMagnitude.b = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude.b;
+            colorHighMagnitude.a = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude.a;
 
-            colors.color_low_magnitude = ScriptableObject.CreateInstance<ColorData>();
-            colors.color_high_magnitude = ScriptableObject.CreateInstance<ColorData>();
+            package.force_sensor_color_settings.color_low_magnitude = ScriptableObject.CreateInstance<ColorData>();
+            package.force_sensor_color_settings.color_high_magnitude = ScriptableObject.CreateInstance<ColorData>();
 
-            colors.color_high_magnitude = colorLowMagnitude;
-            colors.color_high_magnitude = colorHighMagnitude;
+            package.force_sensor_color_settings.color_high_magnitude = colorLowMagnitude;
+            package.force_sensor_color_settings.color_high_magnitude = colorHighMagnitude;
+
+            // Save force settings
+            package.force_sensor_force_settings.force_threshold = ArrowForceVisualizerManager.Instance.ArrowMagnitudeThreshold;
 
             // Build the save package with the new data
             string yamlPath = Path.Combine(Application.streamingAssetsPath, "scene-config.yaml");
@@ -144,7 +115,7 @@ public class YamlReader : MonoBehaviour
             try
             {
                 var serializer = new SerializerBuilder().WithNamingConvention(UnderscoredNamingConvention.Instance).Build();
-                string yamlContent = serializer.Serialize(colors);
+                string yamlContent = serializer.Serialize(package);
 
                 File.WriteAllText(yamlPath, yamlContent);
 
@@ -157,76 +128,106 @@ public class YamlReader : MonoBehaviour
         }
     }
 
-    private void ApplyConfiguration(SceneConfiguration config)
+    // Apply parsed configuration settings to respective game objects, etc.
+    private static void Parse(SceneConfiguration config)
     {
         // Force Sensor game objects specific settings
-        foreach (ForceSensorSettings settings in config.force_sensor_game_objects_settings)
+        foreach (ForceSensorGOSettings settings in config.force_sensor_game_objects_settings)
         {
-            GameObject game_object = GameObject.Find(settings.id);
-            if (game_object == null)
+            // Search for the corresponding game object using a key identifier
+            GameObject gameObject = GameObject.Find(settings.id);
+            if (gameObject == null)
             {
+                // Asynchronously load the game object if not already present in the scene
                 Addressables.LoadAssetAsync<GameObject>(settings.addressable_key).Completed += (asyncOperationHandle) =>
                 {
                     if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
                     {
-                        game_object = Instantiate(asyncOperationHandle.Result);
+                        gameObject = GameObject.Instantiate(asyncOperationHandle.Result);
+                        ApplySettingsToGameObject(gameObject, settings);
 
-                        GameObject parent = GameObject.Find(settings.parent);
-                        if (parent != null)
-                            game_object.transform.parent = parent.transform;
-
-                        // Apply the new params
-                        game_object.name = settings.id;
-                        game_object.transform.position = settings.position;
-                        game_object.transform.rotation = Quaternion.Euler(settings.rotation);
-                        game_object.transform.localScale = settings.scale;
                     }
                     else
-                    {
                         Debug.LogError($"Error loading {settings.id}");
-                    }
                 };
             }
-
             else
-            {
-                // Apply the new params
-                game_object.name = settings.id;
-                game_object.transform.position = settings.position;
-                game_object.transform.rotation = Quaternion.Euler(settings.rotation);
-                game_object.transform.localScale = settings.scale;
-
-            }
+                ApplySettingsToGameObject(gameObject, settings);
         }
 
         // Force Sensor global settings
-        if (ArrowForceVisualizerManager.instance)
+        if (ArrowForceVisualizerManager.Instance == null)
         {
-            // color settings
-            Color colorLowMagnitude = new
-            (config.force_sensor_color_settings.color_low_magnitude.r,
-            config.force_sensor_color_settings.color_low_magnitude.g,
-            config.force_sensor_color_settings.color_low_magnitude.b,
-            config.force_sensor_color_settings.color_low_magnitude.a);
+            Addressables.LoadAssetAsync<GameObject>("arrow_manager").Completed += (asyncOperationHandle) =>
+            {
+                if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    GameObject gameObject = GameObject.Instantiate(asyncOperationHandle.Result);
+                    if (gameObject.TryGetComponent(out ArrowForceVisualizerManager arrowManager))
+                    {
+                        ArrowForceVisualizerManager.Instance = arrowManager;
 
-            Color colorHighMagnitude = new
-                (config.force_sensor_color_settings.color_high_magnitude.r,
-                config.force_sensor_color_settings.color_high_magnitude.g,
-                config.force_sensor_color_settings.color_high_magnitude.b,
-                config.force_sensor_color_settings.color_high_magnitude.a);
+                        // Hack: remove the "clone" word at the end 
+                        gameObject.name = asyncOperationHandle.Result.name;
 
-            ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude = colorLowMagnitude;
-            ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude = colorHighMagnitude;
+                        // Apply color settings + force settings
+                        ApplyColorSettings(ArrowForceVisualizerManager.Instance, config.force_sensor_color_settings);
+                        ApplyForceSettings(ArrowForceVisualizerManager.Instance, config.force_sensor_force_settings);
 
-            ArrowForceVisualizerManager.instance.eDI_ArrowLowMagnitudeColor.TriggerEvent(colorLowMagnitude);
-            ArrowForceVisualizerManager.instance.eDI_ArrowHighMagnitudeColor.TriggerEvent(colorHighMagnitude);
-
-            // force settings
-            ArrowForceVisualizerManager.instance.ArrowMagnitudeThreshold = config.force_sensor_force_settings.force_threshold;
-
-            ArrowForceVisualizerManager.instance.eDI_ArrowMagnitudeThreshold.TriggerEvent(config.force_sensor_force_settings.force_threshold.ToString());
-
-           EditorUtility.SetDirty(ArrowForceVisualizerManager.instance);
+                        if (SceneSettingsManager.Instance)
+                            SceneSettingsManager.Instance.OnArrowManagerStart?.Invoke();
+                    }
+                }
+            };
         }
+
+        else
+        {
+            // color settings + force settings
+            ApplyColorSettings(ArrowForceVisualizerManager.Instance, config.force_sensor_color_settings);
+            ApplyForceSettings(ArrowForceVisualizerManager.Instance, config.force_sensor_force_settings);
+        }
+    }
+
+    // Apply the new params to the targeted game object
+    private static void ApplySettingsToGameObject(GameObject gameObject, ForceSensorGOSettings settings)
+    {
+        GameObject parent = GameObject.Find(settings.parent);
+        if (parent != null)
+            gameObject.transform.SetParent(parent.transform);
+
+        gameObject.name = settings.id;
+        gameObject.transform.position = settings.position;
+        gameObject.transform.rotation = Quaternion.Euler(settings.rotation);
+        gameObject.transform.localScale = settings.scale;
+    }
+
+    // Apply the color data to the arrow manager
+    private static void ApplyColorSettings(ArrowForceVisualizerManager manager, ColorSettings settings)
+    {
+        Color colorLowMagnitude = new
+            (settings.color_low_magnitude.r,
+            settings.color_low_magnitude.g,
+            settings.color_low_magnitude.b,
+            settings.color_low_magnitude.a);
+
+        Color colorHighMagnitude = new
+            (settings.color_high_magnitude.r,
+            settings.color_high_magnitude.g,
+            settings.color_high_magnitude.b,
+            settings.color_high_magnitude.a);
+
+        manager.ArrowColorLowMagnitude = colorLowMagnitude;
+        manager.ArrowColorHighMagnitude = colorHighMagnitude;
+
+        manager.eDI_ArrowLowMagnitudeColor.TriggerEvent(colorLowMagnitude);
+        manager.eDI_ArrowHighMagnitudeColor.TriggerEvent(colorHighMagnitude);
+    }
+
+    // Apply the force data to the arrow manager
+    private static void ApplyForceSettings(ArrowForceVisualizerManager manager, ForceSettings settings)
+    {
+        manager.ArrowMagnitudeThreshold = settings.force_threshold;
+        manager.eDI_ArrowMagnitudeThreshold.TriggerEvent(settings.force_threshold.ToString());
     }
 }
