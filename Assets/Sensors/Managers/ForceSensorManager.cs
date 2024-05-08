@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class ForceSensorManager : MonoBehaviour
 {
-    public static ForceSensorManager instance;
+    private static ForceSensorManager _instance;
+    public static ForceSensorManager Instance { get => _instance; set => _instance = value; }
 
     public float updateDelay = 1f;
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        if (_instance != null && _instance != this)
+        {
             Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

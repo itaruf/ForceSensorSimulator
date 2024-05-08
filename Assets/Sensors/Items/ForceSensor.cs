@@ -20,11 +20,23 @@ public class ForceSensor : MonoBehaviour
 
     private void Start()
     {
+        if (ArrowForceVisualizerManager.Instance == null)
+            SceneSettingsManager.Instance.OnArrowManagerStart += Initialize;
+
+        else
+            Initialize();
+    }
+
+    private void Initialize()
+    {
+        // Instantiate a new force sensor simulator associated to this force sensor
         _forceSensorSimulator = new ForceSensorSimulator(gameObject.name);
 
-        _forceSensorData = new ForceSensorData();
+        // Instantiate the data structure to store the provided information
+        _forceSensorData = ScriptableObject.CreateInstance<ForceSensorData>();
         _forceSensorData.sensorName = name;
 
+        // Start the simulation and keep it active
         _updateSensorWithForceDataCoroutine = StartCoroutine(UpdateSensorWithForceData());
     }
 
@@ -32,21 +44,22 @@ public class ForceSensor : MonoBehaviour
     {
         while (true)
         {
+            // Get the force data from the external library
             ForceSensorSimulator.ForceSensorDataSimulation();
 
-            Vector3 simulatedPosition = new Vector3
-                (ForceSensorSimulator.Position.X, ForceSensorSimulator.Position.Y, ForceSensorSimulator.Position.Z);
-
-            Vector3 simulatedForce = new Vector3(ForceSensorSimulator.Force.X, ForceSensorSimulator.Force.Y, ForceSensorSimulator.Force.Z);
-
-            Quaternion simulatedOrientation = new Quaternion(ForceSensorSimulator.Orientation.X, ForceSensorSimulator.Orientation.Y, ForceSensorSimulator.Orientation.Z,
-           ForceSensorSimulator.Orientation.W);
+            Vector3 simulatedPosition = new(ForceSensorSimulator.Position.X, ForceSensorSimulator.Position.Y, ForceSensorSimulator.Position.Z);
+            Vector3 simulatedForce = new(ForceSensorSimulator.Force.X, ForceSensorSimulator.Force.Y, ForceSensorSimulator.Force.Z);
+            Quaternion simulatedOrientation = new(ForceSensorSimulator.Orientation.X, ForceSensorSimulator.Orientation.Y, ForceSensorSimulator.Orientation.Z, ForceSensorSimulator.Orientation.W);
       
+            // Store the data
             _forceSensorData.force = simulatedForce;
             _forceSensorData.position = simulatedPosition;
             _forceSensorData.orientation = simulatedOrientation;
 
-            yield return new WaitForSeconds(ForceSensorManager.instance.updateDelay);
+            // Update the position and rotation based on those data
+            transform.SetPositionAndRotation(simulatedPosition, simulatedOrientation);
+
+            yield return new WaitForSeconds(ArrowForceVisualizerManager.Instance.UpdateDelay);
         }
     }
 }

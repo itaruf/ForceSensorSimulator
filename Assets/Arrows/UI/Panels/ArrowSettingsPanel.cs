@@ -21,27 +21,36 @@ public class ArrowSettingsPanel : MonoBehaviour
 
     private void Start()
     {
+        if (ArrowForceVisualizerManager.Instance == null)
+            SceneSettingsManager.Instance.OnArrowManagerStart += Initialize;
+
+        else
+            Initialize();
+    }
+
+    private void Initialize()
+    {
         // The Button initial colors are based on the default values
         if (_arrowLowMagnitudeColorButton != null)
-            _arrowLowMagnitudeColorButton.image.color = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude;
+            _arrowLowMagnitudeColorButton.image.color = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude;
 
         if (_arrowHighMagnitudeColorButton != null)
-            _arrowHighMagnitudeColorButton.image.color = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude;
+            _arrowHighMagnitudeColorButton.image.color = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude;
 
         // The Color pickers' initial colors are based on the default values
         if (_arrowLowMagnitudeColorPicker != null)
-            _arrowLowMagnitudeColorPicker.color = ArrowForceVisualizerManager.instance.ArrowColorLowMagnitude;
+            _arrowLowMagnitudeColorPicker.color = ArrowForceVisualizerManager.Instance.ArrowColorLowMagnitude;
 
         if (_arrowHighMagnitudeColorPicker != null)
-            _arrowHighMagnitudeColorPicker.color = ArrowForceVisualizerManager.instance.ArrowColorHighMagnitude;
+            _arrowHighMagnitudeColorPicker.color = ArrowForceVisualizerManager.Instance.ArrowColorHighMagnitude;
 
         // Show or Hide arrows based on the toggle's default value
         if (arrowVisibilityToggle != null)
-            ArrowForceVisualizerManager.instance.eDI_ArrowVisibility.TriggerEvent(arrowVisibilityToggle.isOn);
+            ArrowForceVisualizerManager.Instance.eDI_ArrowVisibility.TriggerEvent(arrowVisibilityToggle.isOn);
 
         // Magnitude threshold based on the default value
         if (_arrowMagnitudeThresholdInputField != null)
-            _arrowMagnitudeThresholdInputField.text = ArrowForceVisualizerManager.instance.ArrowMagnitudeThreshold.ToString();
+            _arrowMagnitudeThresholdInputField.text = ArrowForceVisualizerManager.Instance.ArrowMagnitudeThreshold.ToString();
 
         // Hide Color pickers by default on start
         _arrowLowMagnitudeColorPicker.GetComponentInParent<Canvas>().enabled = false;

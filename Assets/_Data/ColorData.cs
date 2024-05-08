@@ -10,7 +10,7 @@ public class ColorData : ScriptableObject
     public float a { get; set; }
     public string hide_flags { get; set; }
 
-public ColorData() { }
+    public ColorData() { }
 
     public ColorData(string name, float r, float g, float b, float a)
     {
