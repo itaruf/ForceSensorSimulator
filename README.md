@@ -1,4 +1,4 @@
-## AIST-VR-engineer-test
+## ForceSensorSimulator
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 [![Youtube](https://img.shields.io/badge/demo-youtube-%23db1818)](https://youtu.be/ks2A9hrcGHI)
 
